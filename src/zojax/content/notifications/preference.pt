@@ -1,0 +1,35 @@
+<h1 class="z-content-title" tal:content="context/__title__"></h1>
+<div class="z-page-description" tal:content="context/__description__"></div>
+
+<tal:block define="subscriptions view/listSubscriptions"
+	   i18n:domain="zojax.content.notifications">
+  <tal:block condition="not:subscriptions" i18n:translate="">
+    You are not subscribed to any email notification.
+  </tal:block>
+
+  <form action="index.html" method="post" tal:condition="subscriptions">
+    <div class="z-form-fieldset" tal:repeat="subs subscriptions">
+      <h2 tal:content="subs/tp/title"></h2>
+      <div class="z-page-description" tal:content="subs/tp/description"></div>
+      
+      <table class="z-table">
+	<tr tal:repeat="info subs/data"
+	    tal:attributes="class python:repeat['info'].odd() and 'even' or 'odd'">
+	  <td>
+	    <input type="checkbox" name="ids:list" tal:attributes="value info/id" />
+	  </td>
+	  <td>
+	    <a tal:attributes="href info/url; title info/description"
+	       tal:omit-tag="not:info/url" tal:content="info/title" />
+	  </td>
+	</tr>
+      </table>
+    </div>
+    <div class="z-form-controls">
+      <hr />
+      <input type="submit" name="button.unsubscribe" class="z-form-button"
+	     value="Unsubscribe" i18n:attributes="value" />
+    </div>
+  </form>
+
+</tal:block>
