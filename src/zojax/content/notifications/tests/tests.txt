@@ -1,0 +1,112 @@
+=====
+Tests
+=====
+
+    >>> from zope import interface, component, event
+    >>> from zope.interface.verify import verifyObject, verifyClass
+    >>> from zope.testbrowser.testing import Browser
+    >>> from zope.lifecycleevent import ObjectCreatedEvent
+    >>> from zope.app.component.hooks import setSite
+    >>> from zope.app.security.interfaces import IAuthentication
+    >>> from zope.security.management import newInteraction, endInteraction
+    >>> from zojax.content.notifications.utils import \
+    ...     getSubscribers, sendNotification
+    >>> from zojax.content.notifications.interfaces import IContentNotification
+
+    >>> root = getRootFolder()
+    >>> setSite(root)
+    >>> sm = root.getSiteManager()
+
+    >>> class Participation:
+    ...     interaction = None
+    ...     def __init__(self, principal):
+    ...         self.principal = principal
+
+    >>> auth = sm.getUtility(IAuthentication)
+    >>> principal = auth.getPrincipal('zope.mgr')
+
+    >>> endInteraction()
+    >>> newInteraction(Participation(auth.getPrincipal('zope.mgr')))
+
+    >>> notification = sm.getAdapter(root, IContentNotification, 'comments')
+    >>> notification.isSubscribed()
+    False
+
+    >>> notification.subscribe()
+    >>> notification.isSubscribed()
+    True
+
+    >>> from zojax.content.notifications.tests.comment import Comment
+
+    >>> comment = Comment()
+    >>> event.notify(ObjectCreatedEvent(comment))
+    >>> root['comment'] = comment
+    >>> notification.isSubscribedInParents(root['comment'])
+    True
+
+    >>> getSubscribers(('comments',), root)
+    set(['zope.mgr'])
+    
+    >>> sendNotification('comments', root['comment'])
+
+    >>> notification.unsubscribe()
+    >>> notification.isSubscribed()
+    False
+    >>> notification.isSubscribedInParents(root['comment'])
+    False
+    >>> notification.isSubscribedInParents()
+    False
+    >>> endInteraction()
+
+browser test
+
+    >>> admin = Browser()
+    >>> admin.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> admin.handleErrors = False
+
+    >>> admin.open('http://localhost/@@notifications')
+    >>> print admin.contents
+    <div id="space-columns">
+      <div class="z-portal-statusmessage"><!--zojax-statusmessage--></div>
+      <div id="z-portal-workspace" class="z-content-notifications">
+        <h1 class="z-content-title">Email notifications</h1>
+        <div class="z-page-description">
+          Use the checkboxes below to subscribe to email notifications.
+        </div>
+        <form action="@@notifications" method="post">
+          <ul class="z-listing">
+            <li>
+              <div class="z-listing-icon">
+                <input type="checkbox" name="ids:list"
+                       value="comments" />
+              </div>
+              <div class="z-listing-details">
+                <span>Recent comments</span>
+                <div>Recently added comments.</div>
+              </div>
+            </li>
+          </ul>
+          <div class="visualClear"></div>
+          <div class="z-form-controls">
+        <hr />
+        <input class="z-form-button" type="submit"
+            name="form.button.subscribe" value="Subscribe" />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    >>> admin.getControl(name="ids:list").value = ['comments']
+    >>> admin.getControl('Subscribe').click()
+
+    >>> print admin.contents
+    <div id="space-columns">
+    ...<div class="statusMessage">Email notification subscriptions have been updated.</div>...
+    </div>
+
+    >>> admin.getControl(name="ids:list").value = []
+    >>> admin.getControl('Subscribe').click()
+
+cleanup
+
+    >>> setSite(None)

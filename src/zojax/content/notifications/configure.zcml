@@ -1,0 +1,47 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zcml="http://namespaces.zope.org/zcml"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.content.notifications">
+
+  <!-- @@notifications -->
+  <zojax:pagelet
+     for="*"
+     name="notifications"
+     layout="space"
+     template="notifications.pt"
+     class=".notifications.Notifications"
+     permission="zope.View" />
+
+  <zojax:resource
+     name="email-icon.png"
+     file="email.png" />
+
+  <!-- view feed action -->
+  <adapter
+     name="action.emailnotifications"
+     factory=".actions.NotificationsAction"
+     zcml:condition="installed zojax.content.actions" />
+
+  <browser:icon
+     name="zmi_icon"
+     file="notifications-icon.png"
+     for=".actions.INotificationsAction"
+     zcml:condition="installed zojax.content.actions" />
+
+  <!-- personal preferences -->
+  <zojax:preferenceGroup
+     id="notifications"
+     title="Email notifications"
+     description="Email notifications management."
+     schema=".interfaces.INotificationsPreferences" />
+
+  <zojax:pagelet
+     name="index.html"
+     for=".interfaces.INotificationsPreferences"
+     template="preference.pt"
+     class=".preference.PreferenceView"
+     permission="zojax.ModifyPreference" />
+
+</configure>

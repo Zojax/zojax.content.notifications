@@ -1,0 +1,21 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zope">
+
+  <!-- recent comment email notifications -->
+  <adapter 
+     name="comments"
+     factory=".notifications.CommentsNotification" />
+
+  <class class=".notifications.CommentsNotification">
+    <require
+       permission="zope.View"
+       interface=".interfaces.ICommentsNotification" />
+  </class>
+
+  <utility
+     name="comments"
+     factory=".notifications.CommentsNotificationDescription" />
+
+</configure>

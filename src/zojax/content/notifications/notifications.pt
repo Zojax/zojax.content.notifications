@@ -1,0 +1,37 @@
+<div id="space-columns" i18n:domain="zojax.content.notifications">
+  <div class="z-portal-statusmessage"
+       tal:define="msg provider:statusMessage"
+       tal:condition="msg" tal:content="structure msg"></div>
+
+  <div id="z-portal-workspace" class="z-content-notifications">
+    <h1 class="z-content-title" i18n:translate="">Email notifications</h1>
+    <div class="z-page-description" i18n:translate="">
+      Use the checkboxes below to subscribe to email notifications.
+    </div>
+
+    <form action="@@notifications" method="post">
+      <ul class="z-listing" tal:condition="notifications"
+	  tal:define="notifications view/listNotifications">
+        <li tal:repeat="notification notifications">
+	  <div class="z-listing-icon">
+            <input type="checkbox" name="ids:list"
+		   tal:attributes="value notification/type;
+				   checked notification/isSubscribed" />
+	  </div>
+	  <div class="z-listing-details">
+            <span tal:content="notification/title"></span>
+            <div tal:content="notification/description"
+		 tal:condition="notification/description"></div>
+	  </div>
+        </li>
+      </ul>
+      <div class="visualClear"></div>
+
+      <div class="z-form-controls">
+	<hr />
+	<input class="z-form-button" type="submit"
+	       name="form.button.subscribe" value="Subscribe" i18n:attributes="value" />
+      </div>
+    </form>
+  </div>
+</div>

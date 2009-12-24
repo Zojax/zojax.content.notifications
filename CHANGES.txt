@@ -1,0 +1,56 @@
+=======
+CHANGES
+=======
+
+0.4.1 (Unreleased)
+------------------
+
+
+0.4.0 (2009-08-11)
+------------------
+
+- Added 'getSubscribers' method to Notification object
+
+- Call update for mail template
+
+- Do not add 'Reply-To' header to email message if it has one
+
+
+0.3.1 (2009-07-01)
+------------------
+
+- Fixed bug with subscriptions
+
+
+0.3.0 (2009-06-21)
+------------------
+
+- Added site to subscriptions search
+
+- Allow pass search parameters to subscriptions catalog 
+
+- Fixed 'create subscription' method, use passed principal var
+
+- Cleanup proxies before get subscription contexts
+
+- Use context and object to get mail template
+
+- Return principals from sendNotification function
+
+- Added 'getSubscribers' helper function, return set of principal ids
+
+- 'zojax.content.actions' is optional
+
+- Copyright changed to 'Zope Foundation and Contributors'
+
+
+0.2.0 (2009-05-05)
+------------------
+
+- Added optional principal param for all methods
+
+
+0.1.0 (2009-04-08)
+------------------
+
+- Initial release.
