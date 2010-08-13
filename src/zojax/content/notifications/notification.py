@@ -50,15 +50,7 @@ class Notification(object):
             self.context, principal, self.type)
 
     def isSubscribed(self, principal=None):
-        if principal is None:
-            principal = getPrincipal().id
-
-        if getUtility(ISubscriptions).search(
-            object = self.context, principal={'any_of': (principal,)},
-            visibility = None, type = {'any_of': (self.type,)}):
-            return True
-
-        return False
+        return self.getSubscription(principal) is not None
 
     def isSubscribedInParents(self, context=None, principal=None):
         if principal is None:
@@ -113,3 +105,14 @@ class Notification(object):
             principals.add(subs.principal)
 
         return principals
+
+    def getSubscription(self, principal=None):
+        if principal is None:
+            principal = getPrincipal().id
+
+        try:
+            return getUtility(ISubscriptions).search(
+                object = self.context, principal={'any_of': (principal,)},
+                visibility = None, type = {'any_of': (self.type,)})[0]
+        except IndexError:
+            return None

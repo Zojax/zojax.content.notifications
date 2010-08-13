@@ -46,6 +46,9 @@ class IContentNotification(interface.Interface):
     def isSubscribed(principal=None):
         """ check if current principal subscribed """
 
+    def getSubscription(principal=None):
+        """ get current principal subscription """
+
     def isSubscribedInParents(context=None, principal=None):
         """ check if current principal subscribed for parents objects """
 
