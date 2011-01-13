@@ -23,6 +23,8 @@
      name="action.emailnotifications"
      factory=".actions.NotificationsAction"
      zcml:condition="installed zojax.content.actions" />
+     
+  <adapter factory=".notifications.NotificationsContexts" />
 
   <browser:icon
      name="zmi_icon"

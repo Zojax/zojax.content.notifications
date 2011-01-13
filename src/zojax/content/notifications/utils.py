@@ -26,7 +26,7 @@ from zojax.mail.interfaces import IMailAddress
 from zojax.subscription.utils import getPrincipals
 from zojax.subscription.interfaces import ISubscriptions
 
-from interfaces import INotificationMailTemplate
+from interfaces import INotificationMailTemplate, INotificationsContexts
 
 
 def getRequest():
@@ -38,22 +38,11 @@ def getRequest():
                 return participation
 
 
-def getSubscribers(types, context, **params):
+def getSubscribers(types, *objects, **params):
     ids = getUtility(IIntIds)
-    context = removeAllProxies(context)
+    context = removeAllProxies(objects[0])
 
-    contexts = []
-
-    while True:
-        id = ids.queryId(context)
-        if id is not None:
-            contexts.append(id)
-
-        context = context.__parent__
-        if context is None or ISite.providedBy(context):
-            break
-
-    contexts.append(ids.queryId(getSite()))
+    contexts = INotificationsContexts(context).getContexts(*objects, **params)
 
     if isinstance(types, basestring):
         types = (types,)
@@ -74,7 +63,7 @@ def sendNotification(types, *objects, **params):
     if template is None:
         return
 
-    principals = getSubscribers(types, objects[0], **params)
+    principals = getSubscribers(types, *objects, **params)
 
     if principals:
         emails = set()

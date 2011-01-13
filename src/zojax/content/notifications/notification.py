@@ -11,6 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from zojax.content.notifications.interfaces import INotificationsContexts
 """
 
 $Id$
@@ -61,18 +62,7 @@ class Notification(object):
         if context is None:
             context = self.context
 
-        contexts = []
-        while not ISite.providedBy(context):
-            id = ids.queryId(removeAllProxies(context))
-            if id is not None:
-                contexts.append(id)
-
-            context = context.__parent__
-            if context is None:
-                break
-
-        if context is not None:
-            contexts.append(ids.queryId(removeAllProxies(context)))
+        contexts = INotificationsContexts(context).getContexts()
 
         if getUtility(ISubscriptions).search(
             object = {'any_of': contexts}, principal={'any_of': (principal,)},
@@ -85,18 +75,7 @@ class Notification(object):
         ids = getUtility(IIntIds)
         context = removeAllProxies(context)
 
-        contexts = []
-
-        while True:
-            id = ids.queryId(context)
-            if id is not None:
-                contexts.append(id)
-
-            context = context.__parent__
-            if context is None:
-                break
-
-        contexts.append(ids.queryId(getSite()))
+        contexts = INotificationsContexts(context).getContexts()
 
         principals = set()
         for subs in getUtility(ISubscriptions).search(

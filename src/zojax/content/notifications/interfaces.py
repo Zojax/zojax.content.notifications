@@ -62,3 +62,9 @@ class INotificationMailTemplate(interface.Interface):
 
 class INotificationsPreferences(interface.Interface):
     """ email notifications management """
+
+
+class INotificationsContexts(interface.Interface):
+    
+    def getContexts(**params):
+        """ return contexts """
