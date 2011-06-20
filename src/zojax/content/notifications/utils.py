@@ -22,7 +22,7 @@ from zope.security.management import queryInteraction
 from zope.app.intid.interfaces import IIntIds
 from zope.app.component.hooks import getSite
 from zope.app.component.interfaces import ISite
-from zojax.mail.interfaces import IMailAddress
+from zojax.mail.interfaces import IMailer, IMailAddress
 from zojax.subscription.utils import getPrincipals
 from zojax.subscription.interfaces import ISubscriptions
 
@@ -75,8 +75,11 @@ def sendNotification(types, *objects, **params):
         if emails:
             template.update()
 
+            configlet = getUtility(IMailer)
             if not template.hasHeader('Reply-to'):
-                template.addHeader('Reply-to', 'noreply@noreply', False)
+                template.addHeader('Reply-to', formataddr((configlet.email_from_name, 'noreply@noreply'),), False)
+            if not template.hasHeader('From'):
+                template.addHeader('From', formataddr((configlet.email_from_name, 'noreply@noreply'),))
 
             template.send(emails)
 
