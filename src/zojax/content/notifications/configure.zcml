@@ -1,9 +1,27 @@
 <configure
    xmlns="http://namespaces.zope.org/zope"
    xmlns:zcml="http://namespaces.zope.org/zcml"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
    xmlns:zojax="http://namespaces.zope.org/zojax"
    xmlns:browser="http://namespaces.zope.org/browser"
    i18n_domain="zojax.content.notifications">
+
+  <!-- configlet -->
+  <zojax:configlet
+     name="ui.contentnotifications"
+     title="Content Notifications"
+     description="Content Notifications configlet."
+     schema=".interfaces.IContentNotifications"
+     permission="zojax.Configure">
+    <require
+       permission="zope.Public"
+       interface=".interfaces.IContentNotifications" />
+  </zojax:configlet>
+
+  <browser:icon
+     name="zmi_icon"
+     for=".interfaces.IContentNotifications"
+     file="email.png" />
 
   <!-- @@notifications -->
   <zojax:pagelet

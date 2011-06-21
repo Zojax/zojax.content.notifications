@@ -17,6 +17,7 @@ $Id$
 """
 from zope import interface, schema
 from zope.i18nmessageid import MessageFactory
+from z3c.schema.email import RFC822MailAddress
 
 _ = MessageFactory('zojax.content.notifications')
 
@@ -68,3 +69,26 @@ class INotificationsContexts(interface.Interface):
     
     def getContexts(**params):
         """ return contexts """
+
+class IContentNotifications(interface.Interface):
+    """ Content Notifications configlet """
+
+    notification_from_name = schema.TextLine(
+        title = _(u"Notification 'From' name"),
+        default = u'Portal administrator',
+        required = True)
+
+    notification_from_address = RFC822MailAddress(
+        title = _(u"Notification 'From' address"),
+        default = u'noreply@norep.ly',
+        required = True)
+
+    notification_replyto_name = schema.TextLine(
+        title = _(u"Notification 'Reply-to' name"),
+        default = u'Portal administrator',
+        required = True)
+
+    notification_replyto_address = RFC822MailAddress(
+        title = _(u"Notification 'Reply-to' address"),
+        default = u'noreply@norep.ly',
+        required = True)

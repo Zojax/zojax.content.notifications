@@ -26,7 +26,7 @@ from zojax.mail.interfaces import IMailer, IMailAddress
 from zojax.subscription.utils import getPrincipals
 from zojax.subscription.interfaces import ISubscriptions
 
-from interfaces import INotificationMailTemplate, INotificationsContexts
+from interfaces import INotificationMailTemplate, INotificationsContexts, IContentNotifications
 
 
 def getRequest():
@@ -75,11 +75,11 @@ def sendNotification(types, *objects, **params):
         if emails:
             template.update()
 
-            configlet = getUtility(IMailer)
+            configlet = getUtility(IContentNotifications)
             if not template.hasHeader('Reply-to'):
-                template.addHeader('Reply-to', formataddr((configlet.email_from_name, 'noreply@noreply'),), False)
+                template.addHeader('Reply-to', formataddr((configlet.notification_replyto_name, configlet.notification_replyto_address),), False)
             if not template.hasHeader('From'):
-                template.addHeader('From', formataddr((configlet.email_from_name, 'noreply@noreply'),))
+                template.addHeader('From', formataddr((configlet.notification_from_name, configlet.notification_from_address),))
 
             template.send(emails)
 
