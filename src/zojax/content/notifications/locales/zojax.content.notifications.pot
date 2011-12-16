@@ -1,0 +1,83 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Thu Dec  8 22:38:25 2011\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: src/zojax/content/notifications/actions.py:38
+#: src/zojax/content/notifications/configure.zcml:54
+#: src/zojax/content/notifications/notifications.pt:7
+msgid "Email notifications"
+msgstr ""
+
+#: src/zojax/content/notifications/configure.zcml:10
+msgid "Content Notifications configlet."
+msgstr ""
+
+#: src/zojax/content/notifications/configure.zcml:10
+msgid "Content Notifications"
+msgstr ""
+
+#: src/zojax/content/notifications/configure.zcml:54
+msgid "Email notifications management."
+msgstr ""
+
+#: src/zojax/content/notifications/interfaces.py:77
+msgid "Notification 'From' name"
+msgstr ""
+
+#: src/zojax/content/notifications/interfaces.py:82
+msgid "Notification 'From' address"
+msgstr ""
+
+#: src/zojax/content/notifications/interfaces.py:87
+msgid "Notification 'Reply-to' name"
+msgstr ""
+
+#: src/zojax/content/notifications/interfaces.py:92
+msgid "Notification 'Reply-to' address"
+msgstr ""
+
+#: src/zojax/content/notifications/notifications.pt:32
+msgid "Subscribe"
+msgstr ""
+
+#: src/zojax/content/notifications/notifications.pt:8
+msgid "Use the checkboxes below to subscribe to email notifications."
+msgstr ""
+
+#: src/zojax/content/notifications/notifications.py:57
+msgid "Email notification subscriptions have been updated."
+msgstr ""
+
+#: src/zojax/content/notifications/preference.pt:30
+msgid "Unsubscribe"
+msgstr ""
+
+#: src/zojax/content/notifications/preference.pt:6
+msgid "You are not subscribed to any email notification."
+msgstr ""
+
+#: src/zojax/content/notifications/preference.py:79
+msgid "Subscriptions have been updated."
+msgstr ""
+
