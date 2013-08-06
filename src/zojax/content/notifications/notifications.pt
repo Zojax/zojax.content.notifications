@@ -26,7 +26,12 @@
         </li>
       </ul>
       <div class="visualClear"></div>
-
+      <h2>People who already subscribed</h2>
+      <ul  tal:define="subscribers view/listSubscribers">
+        <li tal:repeat="subscriber subscribers">
+            <a tal:content="python: subscriber[0]" tal:attributes="href=python: subscriber[1]"></a>
+        </li>
+      </ul>
       <div class="z-form-controls">
 	<hr />
 	<input class="z-form-button" type="submit"

@@ -15,6 +15,7 @@
 
 $Id$
 """
+from zojax.content.notifications.notification import Notification
 from zope import interface
 from zope.component import adapts, getAdapters, getAdapter, \
                            getUtility, queryAdapter
@@ -24,8 +25,10 @@ from zope.app.component.hooks import getSite
 from zope.app.intid.interfaces import IIntIds
 
 from zojax.statusmessage.interfaces import IStatusMessage
-
 from interfaces import _, IContentNotification, INotificationsContexts
+from zojax.authentication.utils import getPrincipal
+from zojax.principal.profile.interfaces import IPersonalProfile
+from zope.traversing.browser import absoluteURL
 
 
 class Notifications(object):
@@ -38,6 +41,12 @@ class Notifications(object):
 
         notifications.sort()
         return [notification for title, name, notification in notifications]
+
+    def listSubscribers(self):
+        for name, notification in getAdapters((self.context,), IContentNotification):
+            profiles = [IPersonalProfile(getPrincipal(subscriber)) for subscriber in notification.getSubscribers(self.context)]
+            return [(profile.title, absoluteURL(profile.space, self.request)) for profile in profiles]
+        return []
 
     def update(self):
         request = self.request
