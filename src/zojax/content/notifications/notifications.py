@@ -42,11 +42,9 @@ class Notifications(object):
         notifications.sort()
         return [notification for title, name, notification in notifications]
 
-    def listSubscribers(self):
-        for name, notification in getAdapters((self.context,), IContentNotification):
-            profiles = [IPersonalProfile(getPrincipal(subscriber)) for subscriber in notification.getSubscribers(self.context)]
-            return [(profile.title, absoluteURL(profile.space, self.request)) for profile in profiles]
-        return []
+    def listSubscribers(self, notification):
+        profiles = [IPersonalProfile(getPrincipal(subscriber)) for subscriber in notification.getSubscribers(self.context)]
+        return [(profile.title, absoluteURL(profile.space, self.request)) for profile in profiles]
 
     def update(self):
         request = self.request
