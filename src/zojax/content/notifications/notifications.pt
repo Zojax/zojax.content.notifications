@@ -24,13 +24,13 @@
 		 tal:condition="notification/description"></div>
 	  </div>
             <div tal:condition="python:view.listSubscribers(notification)">
-                <!--<div class="visualClear"></div>-->
-                <!--<h2>People who already subscribed</h2>-->
-                <!--<ul  tal:define="subscribers python:view.listSubscribers(notification)">-->
-                    <!--<li tal:repeat="subscriber subscribers">-->
-                        <!--<a tal:content="python: subscriber[0]" tal:attributes="href=python: subscriber[1]"></a>-->
-                    <!--</li>-->
-                <!--</ul>-->
+                <div class="visualClear"></div>
+                <h2>People who already subscribed</h2>
+                <ul  tal:define="subscribers python:view.listSubscribers(notification)">
+                    <li tal:repeat="subscriber subscribers">
+                        <a tal:content="python: subscriber[0]" tal:attributes="href=python: subscriber[1]"></a>
+                    </li>
+                </ul>
             </div>
         </li>
       </ul>
