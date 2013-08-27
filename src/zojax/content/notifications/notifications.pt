@@ -1,51 +1,49 @@
 <div id="space-columns" i18n:domain="zojax.content.notifications">
-  <div class="z-portal-statusmessage"
-       tal:define="msg provider:statusMessage"
-       tal:condition="msg" tal:content="structure msg"></div>
+    <div class="z-portal-statusmessage"
+        tal:define="msg provider:statusMessage"
+        tal:condition="msg" tal:content="structure msg"></div>
 
-  <div id="z-portal-workspace" class="z-content-notifications">
-    <h1 class="z-content-title" i18n:translate="">Email notifications</h1>
-    <div class="z-page-description" i18n:translate="">
-      Use the checkboxes below to subscribe to email notifications.
-    </div>
+    <div id="z-portal-workspace" class="z-content-notifications" tal:define="notifications view/listNotifications">
+        <h1 class="z-content-title" i18n:translate="">Email notifications</h1>
+        <div class="z-page-description" i18n:translate="">
+            Use the checkboxes below to subscribe to email notifications.
+        </div>
 
-    <form action="@@notifications" method="post">
-      <ul class="z-listing" tal:condition="notifications"
-	  tal:define="notifications view/listNotifications">
-        <li tal:repeat="notification notifications">
-	  <div class="z-listing-icon">
-            <input type="checkbox" name="ids:list"
-		   tal:attributes="value notification/type;
-				   checked notification/isSubscribed" />
-	  </div>
-	  <div class="z-listing-details">
-            <span tal:content="notification/title"></span>
-            <div tal:content="notification/description"
-		 tal:condition="notification/description"></div>
-	  </div>
-            <div tal:condition="python:view.listSubscribers(notification)">
-                <div class="visualClear"></div>
-                <h2>People who already subscribed</h2>
-                <ul  tal:define="subscribers python:view.listSubscribers(notification)">
-                    <li tal:repeat="subscriber subscribers">
-                        <a tal:content="python: subscriber[0]" tal:attributes="href=python: subscriber[1]"></a>
-                    </li>
-                </ul>
+        <form action="@@notifications" method="post">
+            <ul class="z-listing" tal:condition="notifications">
+                <li tal:repeat="notification notifications">
+                    <div class="z-listing-icon">
+                        <input type="checkbox" name="ids:list"
+                            tal:attributes="value notification/type;
+                            checked notification/isSubscribed" />
+                    </div>
+                    <div class="z-listing-details">
+                        <span tal:content="notification/title"></span>
+                        <div tal:content="notification/description"
+                            tal:condition="notification/description"></div>
+                    </div>
+                </li>
+            </ul>
+            <div class="visualClear"></div>
+            <div class="z-form-controls">
+                <hr />
+                <input class="z-form-button" type="submit"
+                name="form.button.subscribe" value="Subscribe" i18n:attributes="value" />
             </div>
-        </li>
-      </ul>
-      <div class="visualClear"></div>
-      <!--<h2>People who already subscribed</h2>-->
-      <!--<ul  tal:define="subscribers view/listSubscribers">-->
-        <!--<li tal:repeat="subscriber subscribers">-->
-            <!--<a tal:content="python: subscriber[0]" tal:attributes="href=python: subscriber[1]"></a>-->
-        <!--</li>-->
-      <!--</ul>-->
-      <div class="z-form-controls">
-	<hr />
-	<input class="z-form-button" type="submit"
-	       name="form.button.subscribe" value="Subscribe" i18n:attributes="value" />
-      </div>
-    </form>
-  </div>
+        </form>
+
+        <ul class="z-listing" tal:condition="notifications">
+            <li tal:repeat="notification notifications">
+                <div tal:condition="python:view.listSubscribers(notification)">
+                    <h2>People who are already subscribed</h2>
+                    <ul  tal:define="subscribers python:view.listSubscribers(notification)">
+                        <li tal:repeat="subscriber subscribers">
+                            <a tal:content="python: subscriber[0]" tal:attributes="href=python: subscriber[1]"></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+    </div>
 </div>
