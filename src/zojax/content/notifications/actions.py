@@ -39,7 +39,7 @@ class NotificationsAction(Action):
 
     @property
     def url(self):
-        return '%s/@@notifications'%(absoluteURL(self.context, self.request))
+        return '%s/notifications'%(absoluteURL(self.context, self.request))
 
     def isAvailable(self):
         if IUnauthenticatedPrincipal.providedBy(self.request.principal):
