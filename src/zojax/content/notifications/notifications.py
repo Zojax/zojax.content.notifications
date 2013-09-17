@@ -48,9 +48,10 @@ class Notifications(object):
         return [(profile.title, absoluteURL(profile.space, self.request)) for profile in profiles]
 
     def update(self):
+        self.subscribers = {}
         request = self.request
-
         if 'form.button.subscribe' in request:
+            print 'post request'
             ids = request.get('ids', ())
 
             for name, notification in getAdapters(
@@ -61,8 +62,18 @@ class Notifications(object):
                 else:
                     notification.unsubscribe()
 
+                print notification.title
+                self.subscribers[notification.title] = self.listSubscribers(notification)
+
             IStatusMessage(request).add(
                 _('Email notification subscriptions have been updated.'))
+        else:
+            for name, notification in getAdapters((self.context,), IContentNotification):
+                print 'get request'
+                print notification.title
+                self.subscribers[notification.title] = self.listSubscribers(notification)
+        print self.subscribers
+
 
 
 class NotificationsContexts(object):

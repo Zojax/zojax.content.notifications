@@ -34,9 +34,9 @@
 
         <ul class="z-listing" tal:condition="notifications">
             <li tal:repeat="notification notifications">
-                <div tal:condition="python:view.listSubscribers(notification)">
+                <div>
                     <h2>People who are already subscribed to <span tal:content="notification/title"></span></h2>
-                    <ul  tal:define="subscribers python:view.listSubscribers(notification)">
+                    <ul  tal:define="subscribers python:view.subscribers[notification.title]">
                         <li tal:repeat="subscriber subscribers">
                             <a tal:content="python: subscriber[0]" tal:attributes="href=python: subscriber[1]"></a>
                         </li>
