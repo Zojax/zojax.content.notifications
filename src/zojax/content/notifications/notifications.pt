@@ -9,7 +9,7 @@
             Use the checkboxes below to subscribe to email notifications.
         </div>
 
-        <form action="@@notifications" method="post">
+        <form action="notifications" method="post">
             <ul class="z-listing" tal:condition="notifications">
                 <li tal:repeat="notification notifications">
                     <div class="z-listing-icon">
