@@ -67,34 +67,21 @@ browser test
     >>> admin.open('http://localhost/@@notifications')
     >>> print admin.contents
     <div id="space-columns">
-      <div class="z-portal-statusmessage"><!--zojax-statusmessage--></div>
-      <div id="z-portal-workspace" class="z-content-notifications">
-        <h1 class="z-content-title">Email notifications</h1>
-        <div class="z-page-description">
-          Use the checkboxes below to subscribe to email notifications.
-        </div>
-        <form action="@@notifications" method="post">
-          <ul class="z-listing">
-            <li>
-              <div class="z-listing-icon">
-                <input type="checkbox" name="ids:list"
-                       value="comments" />
-              </div>
-              <div class="z-listing-details">
-                <span>Recent comments</span>
-                <div>Recently added comments.</div>
-              </div>
-            </li>
-          </ul>
-          <div class="visualClear"></div>
-          <div class="z-form-controls">
-        <hr />
-        <input class="z-form-button" type="submit"
-            name="form.button.subscribe" value="Subscribe" />
-          </div>
-        </form>
-      </div>
+    ...
+            <h1 class="z-content-title">Email notifications</h1>
+            <div class="z-page-description">
+                Use the checkboxes below to subscribe to email notifications.
+            </div>
+    ...
+                        <div class="z-listing-details">
+                            <span>Recent comments</span>
+                            <div>Recently added comments.</div>
+    ...
+                    <input class="z-form-button" type="submit" name="form.button.subscribe" value="Subscribe" />
+                </div>
+    ...
     </div>
+
 
     >>> admin.getControl(name="ids:list").value = ['comments']
     >>> admin.getControl('Subscribe').click()
